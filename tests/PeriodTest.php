@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-namespace atinternet_php_api\period;
+namespace piano_analytics_api\period;
 
 final class PeriodTest extends \PHPUnit\Framework\TestCase {
 

@@ -3,8 +3,8 @@
     "description": "PHP implementation for the Piano Reporting API.",
     "type": "library",
         "keywords": [
-            "at internet",
-            "piano analytics"
+            "piano analytics",
+            "at internet"
         ],
     "license": "MIT",
     "authors": [
@@ -23,7 +23,7 @@
     },
     "autoload": {
         "psr-4": {
-            "atinternet_php_api\\": "src/"
+            "piano_analytics_api\\": "src/"
         },
         "files": [
             "src/exceptions.php",

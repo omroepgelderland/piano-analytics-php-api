@@ -64,3 +64,4 @@ vendor/
 debug.sh
 config/
 node_modules
+test/**

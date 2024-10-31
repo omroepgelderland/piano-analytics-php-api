@@ -39,20 +39,20 @@ require_once '/path/to/your-project/vendor/autoload.php';
 ```php
 require_once __DIR__.'/../vendor/autoload.php';
 
-use \atinternet_php_api\filter;
-use \atinternet_php_api\period;
+use \piano_analytics_api\filter;
+use \piano_analytics_api\period;
 
 $site_id = 0;
 $access_key = '';
 $secret_key = '';
 
 // Create API connection
-$at = new \atinternet_php_api\Client($access_key, $secret_key);
+$at = new \piano_analytics_api\Client($access_key, $secret_key);
 
 // Get page titles and number of visits for each page,
 // where the page title is not empty and domain is example.com,
 // ordered by the number of visits from high to low.
-$request = new \atinternet_php_api\Request($at, [
+$request = new \piano_analytics_api\Request($at, [
     'sites' => [$site_id],
     'columns' => [
         'date',

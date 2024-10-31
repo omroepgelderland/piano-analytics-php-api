@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-namespace atinternet_php_api\filter;
+namespace piano_analytics_api\filter;
 
 final class FilterTest extends \PHPUnit\Framework\TestCase {
 

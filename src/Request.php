@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-namespace atinternet_php_api;
+namespace piano_analytics_api;
 
 /**
  * The request object contains the parameters for a data query.
@@ -207,7 +207,7 @@ class Request implements \JsonSerializable {
     /**
      * Execute a query and return a result object with multiple pages of
      * responses from the API.
-     * Use ATInternet::get_result_rows() to get results without having to deal
+     * Use Request::get_result_rows() to get results without having to deal
      * with paging.
      * https://developers.atinternet-solutions.com/piano-analytics/data-api/technical-information/methods#getdata
      * @return ResultPageList
@@ -219,8 +219,8 @@ class Request implements \JsonSerializable {
     /**
      * Execute a data query. Only one page of results is returned. This page may
      * not include all data.
-     * Use ATInternet::get_result_pages() to get a more complete result.
-     * Use ATInternet::get_result_rows() to get results without having to deal
+     * Use Request::get_result_pages() to get a more complete result.
+     * Use Request::get_result_rows() to get results without having to deal
      * with paging.
      * https://developers.atinternet-solutions.com/piano-analytics/data-api/technical-information/methods#getdata
      * @return APIResponseType
@@ -261,7 +261,7 @@ class Request implements \JsonSerializable {
     public function get_rowcount(): int {
         $rowcount_raw = $this->get_rowcount_raw();
         if ( !isset($rowcount_raw->RowCounts) ) {
-            throw new ATInternetError('Key RowCounts missing in response');
+            throw new PianoAnalyticsException('Key RowCounts missing in response');
         }
         return $rowcount_raw->RowCounts[0]->RowCount;
     }
@@ -286,7 +286,7 @@ class Request implements \JsonSerializable {
     public function get_total(): object {
         $total_raw = $this->get_total_raw();
         if ( !isset($total_raw->DataFeed) ) {
-            throw new ATInternetError('Key DataFeed missing in response');
+            throw new PianoAnalyticsException('Key DataFeed missing in response');
         }
         $data = $total_raw->DataFeed->Rows[0];
         foreach ( $data as $key => $value ) {

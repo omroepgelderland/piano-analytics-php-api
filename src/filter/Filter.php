@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-namespace atinternet_php_api\filter;
+namespace piano_analytics_api\filter;
 
 /**
  * A filter can be a statement (Endpoint) or a list of (nested) endpoints.

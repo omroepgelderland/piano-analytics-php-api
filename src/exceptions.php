@@ -6,17 +6,17 @@
  * SPDX-License-Identifier: MIT
  */
 
-namespace atinternet_php_api;
+namespace piano_analytics_api;
 
 /**
  * General exception for errors within the package.
  */
-class ATInternetError extends \Exception {}
+class PianoAnalyticsException extends \Exception {}
 
 /**
  * API error reported by Piano Analytics or Curl.
  */
-class APIError extends ATInternetError {
+class APIError extends PianoAnalyticsException {
 
     /**
      * API error code as reported by the Piano Analytics API.
@@ -25,4 +25,4 @@ class APIError extends ATInternetError {
     public ?string $type;
 }
 
-class NotImplementedException extends ATInternetError {}
+class NotImplementedException extends PianoAnalyticsException {}

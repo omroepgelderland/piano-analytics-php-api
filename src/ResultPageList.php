@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-namespace atinternet_php_api;
+namespace piano_analytics_api;
 
 /**
  * Iterable set of pages with data results.

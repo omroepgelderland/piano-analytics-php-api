@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-namespace atinternet_php_api;
+namespace piano_analytics_api;
 
 /**
  * Iterator for all result rows across multiple pages.
@@ -79,7 +79,7 @@ class ResultRowList implements \Iterator {
         if ( !isset($this->rows) ) {
             $page = $this->result_pages->current();
             if ( !isset($page->DataFeed) ) {
-                throw new ATInternetError('Key DataFeed missing in response');
+                throw new PianoAnalyticsException('Key DataFeed missing in response');
             }
             $this->rows ??= $page->DataFeed->Rows;
         }
