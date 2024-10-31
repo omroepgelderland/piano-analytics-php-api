@@ -44,12 +44,48 @@ final class PeriodTest extends \PHPUnit\Framework\TestCase {
         ]], $p->jsonSerialize());
     }
 
-    public function test_month_period() {
-        $p = new Relative(Relative::MONTH, -1);
+    public function test_relative_day_period() {
+        $p = new RelativeDay(-2);
+        $this->assertEqualsCanonicalizing([[
+            'type' => 'R',
+            'granularity' => 'D',
+            'offset' => -2
+        ]], $p->jsonSerialize());
+    }
+
+    public function test_relative_week_period() {
+        $p = new RelativeWeek();
+        $this->assertEqualsCanonicalizing([[
+            'type' => 'R',
+            'granularity' => 'W',
+            'offset' => 0
+        ]], $p->jsonSerialize());
+    }
+
+    public function test_relative_month_period() {
+        $p = new RelativeMonth(2);
         $this->assertEqualsCanonicalizing([[
             'type' => 'R',
             'granularity' => 'M',
-            'offset' => -1
+            'offset' => 2
+        ]], $p->jsonSerialize());
+    }
+
+    public function test_relative_quarter_period() {
+        $p = new RelativeQuarter(-2);
+        $this->assertEqualsCanonicalizing([[
+            'type' => 'R',
+            'granularity' => 'Q',
+            'offset' => -2
+        ]], $p->jsonSerialize());
+    }
+
+    public function test_relative_year_period() {
+        $p = new RelativeYear(-2);
+        $this->assertEqualsCanonicalizing([[
+            'type' => 'R',
+            'granularity' => 'Y',
+            'offset' => -2
         ]], $p->jsonSerialize());
     }
 }

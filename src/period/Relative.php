@@ -18,13 +18,7 @@ namespace piano_analytics_api\period;
  * }>
  * @phpstan-type RelativeGranularity 'Y'|'Q'|'M'|'W'|'D'
  */
-class Relative implements Period {
-    
-    public const YEAR = 'Y';
-    public const QUARTER = 'Q';
-    public const MONTH = 'M';
-    public const WEEK = 'W';
-    public const DAY = 'D';
+abstract class Relative implements Period {
     
     /** @var RelativeGranularity */
     private string $granularity;
