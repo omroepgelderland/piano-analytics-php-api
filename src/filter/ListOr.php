@@ -2,14 +2,20 @@
 /**
  * @author Remy Glaser <rglaser@gld.nl>
  * 
- * © 2023 Omroep Gelderland
+ * © 20243Omroep Gelderland
  * SPDX-License-Identifier: MIT
  */
 
 namespace atinternet_php_api\filter;
 
 /**
- * A filter can be a statement (Endpoint) or a list of (nested) endpoints.
+ * List of filters combined by OR.
  * https://developers.atinternet-solutions.com/piano-analytics/data-api/parameters/filter
  */
-interface Filter extends \JsonSerializable {}
+class ListOr extends FilterList {
+    
+    protected function get_operator(): string {
+        return '$OR';
+    }
+    
+}

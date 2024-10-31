@@ -1,33 +1,15 @@
 <?php
 /**
- * Copyright 2023 Omroep Gelderland
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- * 
  * @author Remy Glaser <rglaser@gld.nl>
+ * 
+ * © 2023 Omroep Gelderland
+ * SPDX-License-Identifier: MIT
  */
 
 namespace atinternet_php_api;
 
 /**
  * The request object contains the parameters for a data query.
- * Server responses are cached in this object.
  * 
  * @phpstan-type JSONType array{
  *     space: array{
@@ -94,9 +76,6 @@ class Request implements \JsonSerializable {
     private int $max_results;
     private int $page_num;
     private bool $ignore_null_properties;
-    private ResultRowList $result_rows;
-    private object $rowcount_raw;
-    private object $total_raw;
     
     /**
      * Constructs a new request.
@@ -228,8 +207,6 @@ class Request implements \JsonSerializable {
     /**
      * Execute a query and return a result object with multiple pages of
      * responses from the API.
-     * Server responses are cached in this object. Call Request::clear() to
-     * clear the cache.
      * Use ATInternet::get_result_rows() to get results without having to deal
      * with paging.
      * https://developers.atinternet-solutions.com/piano-analytics/data-api/technical-information/methods#getdata
@@ -258,34 +235,26 @@ class Request implements \JsonSerializable {
     
     /**
      * Execute the query and return a result object with all rows from the API.
-     * Server responses are cached in this object. Call Request::clear() to
-     * clear the cache.
      * https://developers.atinternet-solutions.com/piano-analytics/data-api/technical-information/methods#getdata
      * @return ResultRowList
      */
     public function get_result_rows(): ResultRowList {
-        $this->result_rows ??= new ResultRowList($this);
-        return $this->result_rows;
+        return new ResultRowList($this);
     }
     
     /**
      * Returns the number of results for a query.
      * Returns the entire response object from the API.
-     * Server responses are cached in this object. Call Request::clear() to
-     * clear the cache.
      * https://developers.atinternet-solutions.com/piano-analytics/data-api/technical-information/methods#getrowcount
      * @return APIResponseType
      * @throws APIError
      */
     public function get_rowcount_raw(): object {
-        $this->rowcount_raw ??= $this->client->request('getRowCount', $this->jsonSerialize_totals());
-        return $this->rowcount_raw;
+        return $this->client->request('getRowCount', $this->jsonSerialize_totals());
     }
     
     /**
      * Returns the number of results for a query. max_results is ignored.
-     * Server responses are cached in this object. Call Request::clear() to
-     * clear the cache.
      * https://developers.atinternet-solutions.com/piano-analytics/data-api/technical-information/methods#getrowcount
      * @throws APIError
      */
@@ -300,23 +269,18 @@ class Request implements \JsonSerializable {
     /**
      * Get the totals for each metric in a request. max_results is ignored.
      * Returns the entire response object from the API.
-     * Server responses are cached in this object. Call Request::clear() to
-     * clear the cache.
      * https://developers.atinternet-solutions.com/piano-analytics/data-api/technical-information/methods#gettotal
      * @return APIResponseType
      * @throws APIError
      */
     public function get_total_raw(): object {
-        $this->total_raw ??= $this->client->request('getTotal', $this->jsonSerialize_totals());
-        return $this->total_raw;
+        return $this->client->request('getTotal', $this->jsonSerialize_totals());
     }
     
     /**
      * Get the totals for each metric in a request.
-     * Server responses are cached in this object. Call Request::clear() to
-     * clear the cache.
      * https://developers.atinternet-solutions.com/piano-analytics/data-api/technical-information/methods#gettotal
-     * @return object
+     * @return object (object<str, int>)
      * @throws APIError
      */
     public function get_total(): object {
@@ -349,5 +313,5 @@ class Request implements \JsonSerializable {
         $this->page_num = $page_num;
         return $this->get_max_page_results() === 0;
     }
-    
+
 }

@@ -9,7 +9,13 @@
 namespace atinternet_php_api\filter;
 
 /**
- * A filter can be a statement (Endpoint) or a list of (nested) endpoints.
+ * List of filters combined by AND.
  * https://developers.atinternet-solutions.com/piano-analytics/data-api/parameters/filter
  */
-interface Filter extends \JsonSerializable {}
+class ListAnd extends FilterList {
+    
+    protected function get_operator(): string {
+        return '$AND';
+    }
+    
+}

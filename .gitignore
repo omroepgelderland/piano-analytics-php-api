@@ -42,12 +42,24 @@ Icon?
 Thumbs.db
 .directory
 
-# Netbeans #
-nbproject/private/
+### VisualStudioCode ###
+.vscode
+# .vscode/*      # Maybe .vscode/**/* instead - see comments
+# !.vscode/settings.json
+# !.vscode/tasks.json
+# !.vscode/launch.json
+# !.vscode/extensions.json
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+**/.history
 
 # Composer #
 vendor/
 !/composer.lock
+
+# PHPStan
+/phpstan.neon
 
 debug.sh
 config/

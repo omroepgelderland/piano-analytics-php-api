@@ -9,6 +9,6 @@
 namespace atinternet_php_api\period;
 
 /**
- * https://developers.atinternet-solutions.com/piano-analytics/data-api/parameters/period
+ * https://developers.atinternet-solutions.com/piano-analytics/data-api/parameters/period#absolute-periods
  */
-interface Period extends \JsonSerializable {}
+interface Absolute extends Period {}

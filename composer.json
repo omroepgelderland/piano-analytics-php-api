@@ -26,7 +26,8 @@
             "atinternet_php_api\\": "src/"
         },
         "files": [
-            "src/exceptions.php"
+            "src/exceptions.php",
+            "src/filter/endpoints.php"
         ]
     },
     "require-dev": {

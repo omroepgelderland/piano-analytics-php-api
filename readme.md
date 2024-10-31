@@ -1,4 +1,4 @@
-# Piano analytics (formerly ‘At Internet’) PHP client
+# Piano analytics (formerly ‘AT Internet’) PHP client
 
 This library enables you to get queries from the Piano Analytics Reporting API v3.
 This is a third-party library.
@@ -29,18 +29,29 @@ Finally, be sure to include the autoloader:
 require_once '/path/to/your-project/vendor/autoload.php';
 ```
 
-## Example
+## Usage example
+
+1. Create an API key in your [Piano Analytics account](https://analytics.piano.io/profile/#/apikeys).
+2. Get the access key and secret key from the API key.
+3. Find the site ID’s in [Piano Analytics access management](https://analytics.piano.io/access-management/#/sites).
+   Select a site on the page and copy the id from the address bar.
 
 ```php
-require_once __DIR__.'/vendor/autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 
-use \atinternet_php_api\filter\FilterListAnd;
-use \atinternet_php_api\filter\FilterEndpoint;
+use \atinternet_php_api\filter;
+use \atinternet_php_api\period;
+
+$site_id = 0;
+$access_key = '';
+$secret_key = '';
 
 // Create API connection
 $at = new \atinternet_php_api\Client($access_key, $secret_key);
 
-// Create data request parameters.
+// Get page titles and number of visits for each page,
+// where the page title is not empty and domain is example.com,
+// ordered by the number of visits from high to low.
 $request = new \atinternet_php_api\Request($at, [
     'sites' => [$site_id],
     'columns' => [
@@ -55,22 +66,20 @@ $request = new \atinternet_php_api\Request($at, [
         'm_visits',
         'm_page_loads'
     ],
-    'period' => new \atinternet_php_api\period\DayPeriod(
+    'period' => new period\Day(
         new \DateTime('2023-06-01'),
-        new \DateTime('2023-06-01')
+        new \DateTime('2023-06-10')
     ),
     'sort' => [
         '-m_page_loads'
     ],
-    'property_filter' => new FilterListAnd(
-        new FilterEndpoint(
+    'property_filter' => new filter\ListAnd(
+        new filter\IsEmpty(
             'article_id',
-            FilterEndpoint::IS_EMPTY,
             false
         ),
-        new FilterEndpoint(
+        new filter\Contains(
             'domain',
-            FilterEndpoint::CONTAINS,
             [
                 'example.nl',
                 'www.example.nl'
@@ -81,12 +90,12 @@ $request = new \atinternet_php_api\Request($at, [
 
 // All results
 foreach ( $request->get_result_rows() as $item ) {
-    var_dump($item);
+    echo \json_encode($item)."\n";
 }
 
 // Number of results
 var_dump($request->get_rowcount());
 
 // Cumulative metrics for all resulting rows
-var_dump($request->get_total());
+echo \json_encode($request->get_total())."\n";
 ```
