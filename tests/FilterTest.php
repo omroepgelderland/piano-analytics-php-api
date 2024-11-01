@@ -8,6 +8,8 @@
 
 namespace piano_analytics_api\filter;
 
+use \piano_analytics_api\PianoAnalyticsException;
+
 final class FilterTest extends \PHPUnit\Framework\TestCase {
 
     public function test_number_equals() {
@@ -332,5 +334,61 @@ final class FilterTest extends \PHPUnit\Framework\TestCase {
                 '$period' => 'all'
             ]
         ], $f->jsonSerialize());
+    }
+
+    public function test_and_list() {
+        $f = new ListAnd(
+            new Equals("page", "index"),
+            new NotContains("article_id", "wf")
+        );
+        $expected = <<<EOT
+        {
+            "\$AND": [
+                {"page": {"\$eq": "index"}},
+                {"article_id": {"\$nlk": "wf"}}
+            ]
+        }
+        EOT;
+        $this->assertJsonStringEqualsJsonString($expected, \json_encode($f));
+    }
+
+    public function test_or_list() {
+        $f = new ListOr(
+            new Equals("page", "index"),
+            new NotContains("article_id", "wf")
+        );
+        $expected = <<<EOT
+        {
+            "\$OR": [
+                {"page": {"\$eq": "index"}},
+                {"article_id": {"\$nlk": "wf"}}
+            ]
+        }
+        EOT;
+        $this->assertJsonStringEqualsJsonString($expected, \json_encode($f));
+    }
+
+    public function test_and_list_single() {
+        $f = new ListAnd(new Equals("page", "index"));
+        $expected = '{"page": {"$eq": "index"}}';
+        $this->assertJsonStringEqualsJsonString($expected, \json_encode($f));
+    }
+
+    public function test_or_list_single() {
+        $f = new ListOr(new Equals("page", "index"));
+        $expected = '{"page": {"$eq": "index"}}';
+        $this->assertJsonStringEqualsJsonString($expected, \json_encode($f));
+    }
+
+    public function test_empty_and_list() {
+        $f = new ListAnd();
+        $this->expectException(PianoAnalyticsException::class);
+        \json_encode($f);
+    }
+
+    public function test_empty_or_list() {
+        $f = new ListOr();
+        $this->expectException(PianoAnalyticsException::class);
+        \json_encode($f);
     }
 }
