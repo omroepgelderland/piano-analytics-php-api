@@ -21,7 +21,7 @@ use \piano_analytics_api\PianoAnalyticsException;
 abstract class FilterList implements Filter {
 
     /** @var list<Filter> */
-    private array $filters;
+    public array $filters;
     
     /**
      * List of filters. Arguments can be endpoints or other filter lists.
@@ -62,6 +62,13 @@ abstract class FilterList implements Filter {
         return [
             $this->get_operator() => $this->filters
         ];
+    }
+
+    /**
+     * Add a filter or filterlist to this list
+     */
+    public function add( Filter $filter ): void {
+        $this->filters[] = $filter;
     }
     
 }

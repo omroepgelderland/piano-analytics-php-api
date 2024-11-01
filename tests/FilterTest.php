@@ -391,4 +391,19 @@ final class FilterTest extends \PHPUnit\Framework\TestCase {
         $this->expectException(PianoAnalyticsException::class);
         \json_encode($f);
     }
+
+    public function test_add_list() {
+        $f = new ListAnd();
+        $f->add(new Equals("page", "index"));
+        $f->add(new NotContains("article_id", "wf"));
+        $expected = <<<EOT
+        {
+            "\$AND": [
+                {"page": {"\$eq": "index"}},
+                {"article_id": {"\$nlk": "wf"}}
+            ]
+        }
+        EOT;
+        $this->assertJsonStringEqualsJsonString($expected, \json_encode($f));
+    }
 }
