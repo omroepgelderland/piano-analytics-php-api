@@ -25,7 +25,7 @@
         "psr-4": {
             "piano_analytics_api\\": "src/"
         },
-        "files": [
+        "classmap": [
             "src/exceptions.php",
             "src/filter/endpoints.php"
         ]
