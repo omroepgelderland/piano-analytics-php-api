@@ -1,0 +1,8 @@
+/.gitattributes export-ignore
+/.gitignore export-ignore
+/composer.lock export-ignore
+/deploy_dev.sh export-ignore
+/deploy.sh export-ignore
+/phpstan.dist.neon export-ignore
+/ruleset.xml export-ignore
+/tests export-ignore
